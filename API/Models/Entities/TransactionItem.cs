@@ -8,18 +8,18 @@ namespace API.Model.Entities;
 public class TransactionItem : BaseEntity
 {
     [Column("transaction_guid")]
-    public Guid TransactionGuid { get; set; }
+    public Guid? TransactionGuid { get; set; }
     
     [Column("product_guid")]
-    public Guid ProductGuid { get; set; }
+    public Guid? ProductGuid { get; set; }
     
     [Column("price_guid")]
-    public Guid PriceGuid { get; set; }
+    public Guid? PriceGuid { get; set; }
     
     [Column("quantity")]
-    public decimal Quantity { get; set; }
+    public float Quantity { get; set; }
     
-    [Column("subtotal")]
+    [Column("subtotal", TypeName = "decimal(18,2)")]
     public decimal Subtotal { get; set; }
 
     //Cardinality

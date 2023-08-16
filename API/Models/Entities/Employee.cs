@@ -24,5 +24,5 @@ public class Employee : BaseEntity
 
     //Cardinality
     public Role? Role { get; set; }
-    public ICollection<Transaction> Transactions { get; set; }
+    public ICollection<Transaction>? Transactions { get; set; }
 }

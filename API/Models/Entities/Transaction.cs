@@ -13,10 +13,10 @@ public class Transaction : BaseEntity
     public DateTime TransactionsDate { get; set; }
     
 
-    [Column("total_ammount")]
+    [Column("total_ammount", TypeName ="decimal(18,2)")]
     public decimal? TotalAmmount { get; set; }
 
     //Cardinality
-    public ICollection<TransactionItem> TransactionItems { get; set; }
-    public Employee Employee { get; set; }
+    public ICollection<TransactionItem>? TransactionItems { get; set; }
+    public Employee? Employee { get; set; }
 }

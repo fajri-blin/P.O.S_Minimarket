@@ -10,5 +10,5 @@ public class Unit : BaseEntity
     public string Name { get; set; }
 
     //Cardinality
-    public ICollection<Price> Prices { get; set; }
+    public ICollection<Price>? Prices { get; set; }
 }

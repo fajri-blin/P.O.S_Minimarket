@@ -38,31 +38,36 @@ public class PosDbContext : DbContext
         modelBuilder.Entity<Product>()
             .HasMany(product => product.Prices)
             .WithOne(prices => prices.Product)
-            .HasForeignKey(prices => prices.ProductGuid);
+            .HasForeignKey(prices => prices.ProductGuid)
+            .OnDelete(DeleteBehavior.SetNull);
 
         //Product to TransactionItem (One to Many)
         modelBuilder.Entity<Product>()
             .HasMany(product => product.TransactionItems)
             .WithOne(transactions_items => transactions_items.Product)
-            .HasForeignKey(transactions_item => transactions_item.ProductGuid);
+            .HasForeignKey(transactions_item => transactions_item.ProductGuid)
+            .OnDelete(DeleteBehavior.SetNull);
 
         //Unit to Prices (One to Many)
         modelBuilder.Entity<Unit>()
             .HasMany(unit => unit.Prices)
             .WithOne(prices => prices.Unit)
-            .HasForeignKey(prices => prices.UnitGuid);
+            .HasForeignKey(prices => prices.UnitGuid)
+            .OnDelete(DeleteBehavior.SetNull);
 
         //TransactionItem to Transaction (Many to One)
         modelBuilder.Entity<TransactionItem>()
             .HasOne(transaction_item => transaction_item.Transaction)
             .WithMany(transaction => transaction.TransactionItems)
-            .HasForeignKey(transactions_item => transactions_item.TransactionGuid);
+            .HasForeignKey(transactions_item => transactions_item.TransactionGuid)
+            .OnDelete(DeleteBehavior.SetNull);
 
         //TransactionsItem to Product (Many to One)
         modelBuilder.Entity<TransactionItem>()
             .HasOne(transaction_item => transaction_item.Product)
             .WithMany(product => product.TransactionItems)
-            .HasForeignKey(transaction_item => transaction_item.ProductGuid);
+            .HasForeignKey(transaction_item => transaction_item.ProductGuid)
+            .OnDelete(DeleteBehavior.SetNull);
 
         //TransactionItem to Price (Many to One)
         modelBuilder.Entity<TransactionItem>()
