@@ -5,9 +5,9 @@ using API.Models.Entities;
 
 namespace API.Repository.Entities;
 
-public class PriceRepository : GeneralRepository<Price>, IPriceRepository
+public class UnitRepository : GeneralRepository<Unit>, IUnitRepository
 {
-    public PriceRepository(PosDbContext posDbContext) : base(posDbContext)
+    public UnitRepository(PosDbContext posDbContext) : base(posDbContext)
     {
     }
 }

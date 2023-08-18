@@ -1,6 +1,7 @@
-﻿namespace API.Contract.Entities
+﻿using API.Models.Entities;
+
+namespace API.Contract.Entities;
+
+public interface IPriceRepository : IGeneralRepository<Price>
 {
-    public interface IPriceRepository
-    {
-    }
 }

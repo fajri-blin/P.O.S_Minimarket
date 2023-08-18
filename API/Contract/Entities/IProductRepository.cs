@@ -1,6 +1,7 @@
-﻿namespace API.Contract.Entities
+﻿using API.Model.Entities;
+
+namespace API.Contract.Entities;
+
+public interface IProductRepository : IGeneralRepository<Product>
 {
-    public interface IProductRepository
-    {
-    }
 }

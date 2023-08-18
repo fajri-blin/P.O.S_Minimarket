@@ -1,6 +1,8 @@
-﻿namespace API.Contract.Entities
+﻿using API.Model.Entities;
+
+namespace API.Contract.Entities
 {
-    public interface ITransactionItemRepository
+    public interface ITransactionItemRepository : IGeneralRepository<TransactionItem>
     {
     }
 }
