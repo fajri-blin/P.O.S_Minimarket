@@ -19,7 +19,7 @@ public class Employee : BaseEntity
     public string Password { get; set; }
 
     [Column("role_guid")]
-    public Guid RoleGuid { get; set; }
+    public Guid? RoleGuid { get; set; }
 
 
     //Cardinality

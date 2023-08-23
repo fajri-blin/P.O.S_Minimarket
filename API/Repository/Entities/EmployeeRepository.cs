@@ -6,7 +6,7 @@ namespace API.Repository.Entities;
 
 public class EmployeeRepository : GeneralRepository<Employee>, IEmployeeRepository
 {
-    public EmployeeRepository(PosDbContext posDbContext) : base(posDbContext)
-    {
-    }
+    public EmployeeRepository(PosDbContext posDbContext) : base(posDbContext) { }
+
+
 }

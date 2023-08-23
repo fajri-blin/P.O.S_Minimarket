@@ -1,6 +1,7 @@
 using API.Contract.Entities;
 using API.Data;
 using API.Repository.Entities;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,8 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 
+//Add Services
+builder.Services.AddScoped<EmployeeService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
