@@ -22,6 +22,19 @@ public class EmployeeService
         _posDbContext = posDbContext;
     }
 
+    public IEnumerable<EmployeeDTO>? Get() 
+    {
+        var employeeList = _employeeRepository.GetAll();
+        if(employeeList == null || !employeeList.Any())
+        {
+            return null;
+        }
+
+        var dto = employeeList.Select(employee => (EmployeeDTO)employee);
+        return dto;
+
+    }
+
     public EmployeeDTO? Create(NewEmployeeDTO newEmployeeDTO)
     {
         using(var transactions = _posDbContext.Database.BeginTransaction()) 
@@ -52,5 +65,16 @@ public class EmployeeService
                 return null;
             }
         }
+    }
+
+    public int Delete(Guid guid)
+    {
+        var employeeEntity = _employeeRepository.GetByGuid(guid);
+        if (employeeEntity == null) return -1;
+        
+        var isDelete = _employeeRepository.Delete(employeeEntity);
+        if (isDelete == false) return 0;
+
+        return 1;
     }
 }

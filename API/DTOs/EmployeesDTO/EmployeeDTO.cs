@@ -20,6 +20,7 @@ public class EmployeeDTO
             LastName = dto.LastName,
             UserName = dto.UserName,
             Password = dto.Password,
+            RoleGuid = dto.RoleGuid,
         };
     }
 
@@ -32,6 +33,7 @@ public class EmployeeDTO
             LastName = employee.LastName,
             UserName = employee.UserName,
             Password = employee.Password,
+            RoleGuid = employee.RoleGuid,
         };
     }
 
