@@ -4,6 +4,7 @@ using API.DTOs.EmployeesDTO;
 using API.DTOs.RolesDTO;
 using API.Model.Entities;
 using API.Repository.Entities;
+using API.Utilities.Enum;
 
 namespace API.Services;
 
@@ -45,9 +46,9 @@ public class EmployeeService
                 Role newRole = null;
                 if (getRole == null)
                 {
-                    newRole = (Role) new NewRoleDTO
+                    newRole = (Role)new NewRoleDTO
                     {
-                        Name = nameof(newEmployeeDTO.RoleName)
+                        Name = Enum.GetName(typeof(EmployeeEnum), newEmployeeDTO.RoleName)
                     };
                     newRole = _roleRepository.Create(newRole);
                 }
