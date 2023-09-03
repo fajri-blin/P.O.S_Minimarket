@@ -32,7 +32,8 @@ public class PosDbContext : DbContext
         modelBuilder.Entity<Role>()
             .HasMany(role => role.Employees)
             .WithOne(employee => employee.Role)
-            .HasForeignKey(employee => employee.RoleGuid);
+            .HasForeignKey(employee => employee.RoleGuid)
+            .OnDelete(DeleteBehavior.SetNull);
 
         //Product to Prices (One to Many)
         modelBuilder.Entity<Product>()

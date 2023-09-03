@@ -9,7 +9,7 @@ public class RoleService
     private readonly IRoleRepository _roleService;
     private readonly PosDbContext _context;
 
-    public RoleService(RoleService roleService, PosDbContext context)
+    public RoleService(IRoleRepository roleService, PosDbContext context)
     {
         _roleService = roleService;
         _context = context;

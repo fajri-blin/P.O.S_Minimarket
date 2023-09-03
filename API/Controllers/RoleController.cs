@@ -35,6 +35,7 @@ public class RoleController : ControllerBase
                 return NotFound();
             case 0:
                 return BadRequest();
+                default: break;
         }
         return Ok();
     }
