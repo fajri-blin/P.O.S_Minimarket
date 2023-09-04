@@ -44,6 +44,7 @@ public class EmployeeService
             {
                 var getRole = _roleRepository.GetByName(nameof(newEmployeeDTO.RoleName));
                 Role newRole = null;
+                
                 if (getRole == null)
                 {
                     newRole = (Role)new NewRoleDTO
@@ -52,6 +53,7 @@ public class EmployeeService
                     };
                     newRole = _roleRepository.Create(newRole);
                 }
+
                 var newEmployee = (Employee) newEmployeeDTO;
                 var roleToUse = getRole ?? newRole;
                 newEmployee.RoleGuid = roleToUse.Guid;
