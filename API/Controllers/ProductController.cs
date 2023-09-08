@@ -16,6 +16,15 @@ public class ProductController : ControllerBase
         _productService = productService;
     }
 
+    [HttpGet]
+    public IActionResult Get()
+    {
+        var list = _productService.Get();
+        if (list == null) return NotFound();
+
+        return Ok(list);
+    }
+
     [HttpPost]
     public IActionResult Create(NewProductDTO productDTO)
     {
@@ -23,5 +32,17 @@ public class ProductController : ControllerBase
         if (created == null) return BadRequest();
 
         return Ok(created);
+    }
+
+    [HttpDelete("Delete")]
+    public IActionResult Delete(Guid guid) 
+    {
+        var delete = _productService.Delete(guid);
+        switch (delete)
+        {
+            case -1: return BadRequest();
+            case 0: return NotFound();
+        }
+        return Ok(delete);
     }
 }
