@@ -23,6 +23,7 @@ builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 //Add Services
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<ProductService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

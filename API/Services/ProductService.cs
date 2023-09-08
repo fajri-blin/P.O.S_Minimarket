@@ -16,6 +16,26 @@ public class ProductService
         _posDbContext = posDbContext;
     }
 
+    public IEnumerable<ProductDTO> Get()
+    {
+        var list = _productRepository.GetAll();
+        if (list == null || !list.Any()) return null;
+
+        var dto=list.Select(product => (ProductDTO)product);
+        return dto;
+    }
+
+    public int Delete(Guid guid)
+    {
+        var getEntity = _productRepository.GetByGuid(guid);
+        if (getEntity == null) return -1;
+
+        var delete = _productRepository.Delete(getEntity);
+        if (!delete) return 0;
+
+        return 1;
+    }
+
     public ProductDTO? Create(NewProductDTO newProductDTO)
     {
         using(var transactions = _posDbContext.Database.BeginTransaction())
