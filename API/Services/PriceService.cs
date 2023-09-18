@@ -1,5 +1,7 @@
 ﻿using API.Contract.Entities;
 using API.Data;
+using API.DTOs.PriceDTO;
+using API.DTOs.ProductDTO;
 
 namespace API.Services;
 
@@ -14,5 +16,14 @@ public class PriceService
         _priceRepository = priceRepository;
         _productRepository = productRepository;
         _posDbContext = posDbContext;
+    }
+
+    public IEnumerable<PriceDTO> GetAll() 
+    {
+        var listPrice = _priceRepository.GetAll();
+        if (listPrice == null || !listPrice.Any()) return null;
+
+        var dto = listPrice.Select(price => (PriceDTO)price);
+        return dto;
     }
 }
