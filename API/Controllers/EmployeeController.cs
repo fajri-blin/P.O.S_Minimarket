@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/")]
 public class EmployeeController : ControllerBase
 {
     private readonly EmployeeService _employeeService;
@@ -24,7 +24,7 @@ public class EmployeeController : ControllerBase
         return Ok(listEmployee);
     }
 
-    [HttpPost("AddEmployee")]
+    [HttpPost("AddEmployee/")]
     public IActionResult AddEmployee(NewEmployeeDTO newEmployeeDTO)
     {
         var created = _employeeService.Create(newEmployeeDTO);
@@ -35,7 +35,7 @@ public class EmployeeController : ControllerBase
         return NotFound();
     }
 
-    [HttpDelete("Delete")]
+    [HttpDelete("Delete/{guid}")]
     public IActionResult DeleteEmployee(Guid guid) 
     { 
         var delete = _employeeService.Delete(guid);

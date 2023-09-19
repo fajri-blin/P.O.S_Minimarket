@@ -66,4 +66,27 @@ public class PriceService
             }
         }
     }
+
+    public int Delete(Guid guid)
+    {
+        using(var transaction  = _posDbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                var getPrice = _priceRepository.GetByGuid(guid);
+                if (getPrice == null) return 0;
+
+                var deletedPrice = _priceRepository.Delete(getPrice);
+                if (!deletedPrice) return 0;
+                transaction.Commit();
+                return 1;
+            }
+            catch
+            {
+                transaction.Rollback();
+                return -1;
+            }
+        }
+        
+    }
 }

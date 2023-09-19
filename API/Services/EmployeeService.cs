@@ -72,12 +72,25 @@ public class EmployeeService
 
     public int Delete(Guid guid)
     {
-        var employeeEntity = _employeeRepository.GetByGuid(guid);
-        if (employeeEntity == null) return -1;
-        
-        var isDelete = _employeeRepository.Delete(employeeEntity);
-        if (isDelete == false) return 0;
+        using(var transactions = _posDbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                var employeeEntity = _employeeRepository.GetByGuid(guid);
+                if (employeeEntity == null) return 0;
 
-        return 1;
+                var isDelete = _employeeRepository.Delete(employeeEntity);
+                if (isDelete == false) return 0;
+                transactions.Commit();
+                return 1;
+
+            }
+            catch
+            {
+                transactions.Rollback();
+                return -1;
+            }
+        }
+        
     }
 }

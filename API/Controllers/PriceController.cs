@@ -34,4 +34,14 @@ public class PriceController : ControllerBase
         }
         return NotFound();
     }
+
+    [HttpDelete("Delete/{guid}")]
+    public IActionResult DeletePrice(Guid guid) 
+    {
+        var deleted = _priceService.Delete(guid);
+        if(deleted == -1) return BadRequest();
+        if(deleted != 0) return NotFound();
+        
+        return Ok();
+    }
 }
