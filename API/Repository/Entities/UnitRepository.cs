@@ -10,4 +10,9 @@ public class UnitRepository : GeneralRepository<Unit>, IUnitRepository
     public UnitRepository(PosDbContext posDbContext) : base(posDbContext)
     {
     }
+    //Get Unit by Name
+    public Unit? GetByName(string name)
+    {
+        return _posDbContext.Set<Unit>().FirstOrDefault(unit => unit.Name.ToLower() == name.ToLower());
+    }
 }

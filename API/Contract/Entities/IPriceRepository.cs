@@ -1,4 +1,5 @@
-﻿using API.Models.Entities;
+﻿using API.Model.Entities;
+using API.Models.Entities;
 
 namespace API.Contract.Entities;
 

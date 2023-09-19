@@ -1,9 +1,21 @@
-﻿namespace API.DTOs.PriceDTO;
+﻿using API.Models.Entities;
+
+namespace API.DTOs.PriceDTO;
 
 public class NewPriceDTO
 {
     public Guid ProductGuid { get; set; }
-    public string Unit { get; set; }
-    public float Price { get; set; }
+    public String UnitName { get; set; }
+    public decimal Ammount { get; set; }
+
+    public static explicit operator Price(NewPriceDTO newPriceDTO)
+    {
+        return new Price
+        {
+            Guid = Guid.NewGuid(),
+            ProductGuid = newPriceDTO.ProductGuid,
+            Ammount = newPriceDTO.Ammount
+        };
+    }
 
 }

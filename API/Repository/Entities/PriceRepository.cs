@@ -7,7 +7,6 @@ namespace API.Repository.Entities;
 
 public class PriceRepository : GeneralRepository<Price>, IPriceRepository
 {
-    public PriceRepository(PosDbContext posDbContext) : base(posDbContext)
-    {
-    }
+    public PriceRepository(PosDbContext posDbContext) : base(posDbContext) { }
+
 }
