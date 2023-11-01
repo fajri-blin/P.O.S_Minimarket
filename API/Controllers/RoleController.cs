@@ -1,5 +1,10 @@
-﻿using API.Services;
+﻿using API.DTOs.ProductDTO;
+using API.DTOs.RolesDTO;
+using API.Services;
+using API.Utilities.Handler;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Net;
 
 namespace API.Controllers;
 
@@ -20,9 +25,20 @@ public class RoleController : ControllerBase
         var listRole = _roleService.GetAll();
         if (listRole == null)
         {
-            return NotFound();
+            return NotFound(new ResponseHandlers<RoleDTO>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data Not Found"
+            });
         }
-        return Ok(listRole);
+        return Ok(new ResponseHandlers<IEnumerable<RoleDTO>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data Found",
+            Data = listRole
+        });
     }
 
     [HttpDelete("Delete")]
@@ -32,11 +48,27 @@ public class RoleController : ControllerBase
         switch(delete)
         {
             case -1:
-                return NotFound();
+                return NotFound(new ResponseHandlers<RoleDTO>
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "Data that want to delete is not found"
+                });
             case 0:
-                return BadRequest();
-                default: break;
+                return BadRequest(new ResponseHandlers<RoleDTO>
+                {
+                    Code = StatusCodes.Status400BadRequest,
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = "Bad Connections, Data Failed to Delete"
+                });
+            default: break;
         }
-        return Ok();
+        return Ok(new ResponseHandlers<int>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Successfully delete the data",
+            Data = delete
+        });
     }
 }

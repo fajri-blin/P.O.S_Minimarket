@@ -1,6 +1,9 @@
 ﻿using API.DTOs.EmployeesDTO;
+using API.DTOs.ProductDTO;
 using API.Services;
+using API.Utilities.Handler;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace API.Controllers;
 
@@ -19,9 +22,21 @@ public class EmployeeController : ControllerBase
     public IActionResult GetEmployee()
     {
         var listEmployee = _employeeService.Get();
-        if (listEmployee == null) return NotFound();
+        if (listEmployee == null) return NotFound(
+            new ResponseHandlers<EmployeeDTO>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data Not Found"
+            });
 
-        return Ok(listEmployee);
+        return Ok(new ResponseHandlers<IEnumerable<EmployeeDTO>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data Found",
+            Data = listEmployee,
+        });
     }
 
     [HttpPost("AddEmployee/")]
@@ -30,9 +45,21 @@ public class EmployeeController : ControllerBase
         var created = _employeeService.Create(newEmployeeDTO);
         if (created != null)
         {
-            return Ok(created);
+            return Ok(new ResponseHandlers<EmployeeDTO>
+            {
+                Code= StatusCodes.Status200OK,
+                Status = HttpStatusCode.OK.ToString(),
+                Message = "Successfully Added Data",
+                Data = created,
+            });
         }
-        return NotFound();
+        return BadRequest(new ResponseHandlers<EmployeeDTO>
+        {
+            Code = StatusCodes.Status400BadRequest,
+            Status = HttpStatusCode.BadRequest.ToString(),
+            Message = "Data Failed to Add",
+            Data = created
+        });
     }
 
     [HttpDelete("Delete/{guid}")]
@@ -42,10 +69,26 @@ public class EmployeeController : ControllerBase
         switch(delete)
         {
             case -1:
-                return NotFound();
+                return NotFound(new ResponseHandlers<EmployeeDTO>
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "Data that want to delete is not found"
+                });
             case 0:
-                return BadRequest();
+                return BadRequest(new ResponseHandlers<EmployeeDTO>
+                {
+                    Code = StatusCodes.Status400BadRequest,
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = "Bad Connections, Data Failed to Delete"
+                });
         }
-        return Ok();
+        return Ok(new ResponseHandlers<int>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Successfully delete the data",
+            Data = delete
+        });
     }
 }
