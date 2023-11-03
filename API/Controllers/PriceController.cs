@@ -39,6 +39,27 @@ public class PriceController : ControllerBase
         });
     }
 
+    [HttpPost("UpdatePrice/")]
+    public IActionResult UpdatePrice(PriceDTO price)
+    {
+        var updated = _priceService.Edit(price);
+        if (updated == false) return NotFound(new ResponseHandlers<bool>
+        {
+            Code = StatusCodes.Status404NotFound,
+            Status = HttpStatusCode.NotFound.ToString(),
+            Message = "Data Not Found",
+            Data = updated
+        });
+
+        return Ok(new ResponseHandlers<bool>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Successfully Updated",
+            Data = updated
+        });
+    }
+
     [HttpPost("AddPrice/")]
     public IActionResult AddPrice(NewPriceDTO newPriceDTO)
     {
@@ -61,7 +82,7 @@ public class PriceController : ControllerBase
         });
     }
 
-    [HttpDelete("Delete/{guid}")]
+    [HttpDelete("DeletePrice/{guid}")]
     public IActionResult DeletePrice(Guid guid) 
     {
         var deleted = _priceService.Delete(guid);

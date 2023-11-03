@@ -67,6 +67,28 @@ public class PriceService
         }
     }
 
+    public bool Edit(PriceDTO priceDto)
+    {
+        using(var transactions = _posDbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                var getPrice = _priceRepository.GetByGuid(priceDto.Guid);
+                if (getPrice == null) return false;
+
+                var updatePrice = _priceRepository.Update(getPrice);
+                if (!updatePrice) return false;
+
+                return true;
+            }
+            catch
+            {
+                transactions.Rollback();
+                return false;
+            }
+        }
+    }
+
     public int Delete(Guid guid)
     {
         using(var transaction  = _posDbContext.Database.BeginTransaction())
