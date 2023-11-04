@@ -62,6 +62,28 @@ public class EmployeeController : ControllerBase
         });
     }
 
+    [HttpPut("UpdatePrice/")]
+    public IActionResult UpdateEmployee(EmployeeDTO newEmployeeDTO)
+    {
+        var update = _employeeService.Edit(newEmployeeDTO);
+        if (!update)
+        {
+            return BadRequest(new ResponseHandlers<EmployeeDTO>
+            {
+                Code = StatusCodes.Status400BadRequest,
+                Status = HttpStatusCode.BadRequest.ToString(),
+                Message = "Bad Connections, Data Failed to Update"
+            });
+        }
+        return Ok(new ResponseHandlers<EmployeeDTO>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Successfully delete the data",
+            Data = newEmployeeDTO
+        });
+    }
+
     [HttpDelete("Delete/{guid}")]
     public IActionResult DeleteEmployee(Guid guid) 
     { 

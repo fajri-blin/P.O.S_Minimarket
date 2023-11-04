@@ -38,6 +38,7 @@ public class PriceService
         {
             try
             {
+                //check existing unit price
                 var getUnit = _unitRepository.GetByName(newPriceDTO.UnitName);
                 Unit newUnit = null;
                 if (getUnit == null)
@@ -49,9 +50,9 @@ public class PriceService
                     var createdUnit = _unitRepository.Create(newUnit);
                     if (createdUnit == null) return null;
                 }
+                var unitToUse = getUnit ?? newUnit;
 
                 var newPrice = (Price)newPriceDTO;
-                var unitToUse = getUnit ?? newUnit;
                 newPrice.UnitGuid = unitToUse!.Guid;
 
                 var createdPrice = _priceRepository.Create(newPrice);
@@ -73,12 +74,21 @@ public class PriceService
         {
             try
             {
+                //get price
                 var getPrice = _priceRepository.GetByGuid(priceDto.Guid);
                 if (getPrice == null) return false;
 
-                var updatePrice = _priceRepository.Update(getPrice);
+                //set new price
+                var newPrice = (Price)priceDto;
+                newPrice.UnitGuid = getPrice.UnitGuid;
+                newPrice.ProductGuid = getPrice.ProductGuid;
+
+
+                //update the price
+                var updatePrice = _priceRepository.Update(newPrice);
                 if (!updatePrice) return false;
 
+                transactions.Commit();
                 return true;
             }
             catch

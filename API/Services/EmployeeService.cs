@@ -42,6 +42,7 @@ public class EmployeeService
         {
             try
             {
+                //check existing role in employee's input
                 var getRole = _roleRepository.GetByName(nameof(newEmployeeDTO.RoleName));
                 Role newRole = null;
                 
@@ -53,9 +54,9 @@ public class EmployeeService
                     };
                     newRole = _roleRepository.Create(newRole);
                 }
+                var roleToUse = getRole ?? newRole;
 
                 var newEmployee = (Employee) newEmployeeDTO;
-                var roleToUse = getRole ?? newRole;
                 newEmployee.RoleGuid = roleToUse.Guid;
 
                 var createdEmployee = _employeeRepository.Create(newEmployee);
@@ -66,6 +67,33 @@ public class EmployeeService
             {
                 transactions.Rollback();
                 return null;
+            }
+        }
+    }
+
+    public bool Edit(EmployeeDTO employeeDTO)
+    {
+        using(var transaction = _posDbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                //get employee
+                var getEmployee = _employeeRepository.GetByGuid(employeeDTO.Guid);
+                if (getEmployee == null) return false;
+
+                //set new employee
+                var newEmployee = (Employee)employeeDTO;
+                newEmployee.RoleGuid = getEmployee.RoleGuid;
+
+                // update the employee
+                var updateEmployee = _employeeRepository.Update(newEmployee);
+                if (!updateEmployee) return false;
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

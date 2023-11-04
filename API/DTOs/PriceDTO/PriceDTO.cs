@@ -19,4 +19,13 @@ public class PriceDTO
             Ammount = price.Ammount,
         };
     }
+
+    public static explicit operator Price(PriceDTO price)
+    {
+        return new Price
+        {
+            Guid = price.Guid,
+            Ammount = price.Ammount
+        };
+    }
 }
