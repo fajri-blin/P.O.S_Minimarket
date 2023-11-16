@@ -7,7 +7,7 @@ public class TransactionDTO
 {
     public Guid Guid { get; set; }
     public Guid? EmployeeGuid { get; set; }
-    public DateTime? TransactionDate { get; set; }
+    public DateTime TransactionDate { get; set; }
     public decimal? TotalAmmount { get; set; }
     public IEnumerable<TransactionItemDTO> TransactionItemsDTO { get; set; }
 
@@ -19,6 +19,16 @@ public class TransactionDTO
             EmployeeGuid = transaction.EmployeeGuid,
             TransactionDate = transaction.TransactionsDate,
             TotalAmmount = transaction.TotalAmmount
+        };
+    }
+    public static explicit operator Transaction(TransactionDTO transactionDTO)
+    {
+        return new Transaction
+        {
+            Guid = transactionDTO.Guid,
+            EmployeeGuid = transactionDTO.EmployeeGuid,
+            TransactionsDate = transactionDTO.TransactionDate,
+            TotalAmmount = transactionDTO.TotalAmmount
         };
     }
 }

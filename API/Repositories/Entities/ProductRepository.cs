@@ -12,7 +12,7 @@ public class ProductRepository : GeneralRepository<Product>, IProductRepository
     {
     }
 
-    public Product GetByBarcode(string barcode)
+    public Product? GetByBarcode(string barcode)
     {
         return _posDbContext.Set<Product>().FirstOrDefault(product => product.BarcodeID == barcode);
     }

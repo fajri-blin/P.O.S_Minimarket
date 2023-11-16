@@ -4,4 +4,5 @@ namespace API.Contract.Entities;
 
 public interface IProductRepository : IGeneralRepository<Product>
 {
+    Product? GetByBarcode(string barcode);
 }

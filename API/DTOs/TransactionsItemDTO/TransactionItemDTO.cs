@@ -23,4 +23,17 @@ public class TransactionItemDTO
             SubTotal = transactionItem.Subtotal
         };
     }
+
+    public static explicit operator TransactionItem(TransactionItemDTO transactionItem)
+    {
+        return new TransactionItem
+        {
+            Guid = transactionItem.Guid,
+            TransactionGuid = transactionItem.TransactionGuid,
+            ProductGuid = transactionItem.ProductGuid,
+            PriceGuid = transactionItem.PriceGuid,
+            Quantity = transactionItem.Quantity,
+            Subtotal = transactionItem.SubTotal
+        };
+    }
 }

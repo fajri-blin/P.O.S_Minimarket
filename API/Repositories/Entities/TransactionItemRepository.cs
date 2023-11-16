@@ -10,4 +10,9 @@ public class TransactionItemRepository : GeneralRepository<TransactionItem>, ITr
     public TransactionItemRepository(PosDbContext posDbContext) : base(posDbContext)
     {
     }
+    
+    public IEnumerable<TransactionItem>? GetByTransactionsGuid(Guid guid)
+    {
+        return _posDbContext.Set<TransactionItem>().Where(x => x.TransactionGuid == guid);
+    }
 }
