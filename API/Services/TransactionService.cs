@@ -118,4 +118,49 @@ public class TransactionService
             }
         }
     }
+
+    public int Delete(Guid guid)
+    {
+        using(var transactionContext = _posDbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                //Check Existing Transactions
+                var isExist = _transactionRepository.IsExits(guid);
+                if (isExist == false) return (int)HttpStatusCode.NotFound;
+                var getTransaction = _transactionRepository.GetByGuid(guid)!;
+
+                //Delete TransactionsItem
+                if (getTransaction.TransactionItems != null)
+                {
+                    var getTransactionItem = _transactionItemRepository.GetByTransactionsGuid(guid)!;
+                    foreach(var transactionItem in getTransactionItem)
+                    {
+                        var deleteTransactionItem = _transactionItemRepository.Delete(transactionItem);
+                        if (!deleteTransactionItem)
+                        {
+                            transactionContext.Rollback();
+                            return (int)HttpStatusCode.BadRequest;
+                        }
+                    }
+                }
+
+                //Delete Transaction
+                var deleteTransaction = _transactionRepository.Delete(getTransaction);
+                if (!deleteTransaction)
+                {
+                    transactionContext.Rollback();
+                    return (int)HttpStatusCode.BadRequest;
+                }
+
+                transactionContext.Commit();
+                return (int)HttpStatusCode.OK;
+            } 
+            catch
+            {
+                transactionContext.Rollback();
+                return (int)HttpStatusCode.BadRequest;
+            }
+        }
+    }
 }
