@@ -1,6 +1,7 @@
 ﻿using API.Contract.Entities;
 using API.Data;
 using API.DTOs.TransactionsDTO;
+using API.DTOs.TransactionsItemDTO;
 using API.Model.Entities;
 using System.Net;
 
@@ -17,6 +18,36 @@ public class TransactionService
         _transactionRepository = transactionRepository;
         _transactionItemRepository = transactionItemRepository;
         _posDbContext = posDbContext;
+    }
+
+    public IEnumerable<TransactionDTO>? GetAll()
+    {
+        var transactions = _transactionRepository.GetAll();
+        if (transactions == null) return null;
+
+        ICollection<TransactionDTO> transactionDto = null;
+        foreach (TransactionDTO transaction in transactions) 
+        {
+            transactionDto.Add(transaction);
+        }
+        return transactionDto;
+    }
+
+    public TransactionDTO? GetDetailTransaction(Guid guid)
+    {
+        var getTransaction = _transactionRepository.GetByGuid(guid);
+        if (getTransaction == null) return null;
+        var transactionDto = (TransactionDTO)getTransaction;
+
+        var TransactionItems = _transactionItemRepository.GetByTransactionsGuid(transactionDto.Guid);
+        if (TransactionItems != null)
+        {
+            foreach(var transactionItem in TransactionItems)
+            {
+                transactionDto.TransactionItemsDTO.Add((TransactionItemDTO)transactionItem);
+            }
+        }
+        return transactionDto;
     }
 
     public TransactionDTO? Create(NewTransactionDTO transactionDTO)

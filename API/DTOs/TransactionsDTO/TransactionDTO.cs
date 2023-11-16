@@ -9,7 +9,7 @@ public class TransactionDTO
     public Guid? EmployeeGuid { get; set; }
     public DateTime TransactionDate { get; set; }
     public decimal? TotalAmmount { get; set; }
-    public IEnumerable<TransactionItemDTO> TransactionItemsDTO { get; set; }
+    public ICollection<TransactionItemDTO>? TransactionItemsDTO { get; set; }
 
     public static explicit operator TransactionDTO(Transaction transaction)
     {
