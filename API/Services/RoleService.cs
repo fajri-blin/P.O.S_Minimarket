@@ -1,4 +1,4 @@
-﻿using API.Contract.Entities;
+﻿using API.Contracts.Repositories.Entities;
 using API.Data;
 using API.DTOs.RolesDTO;
 

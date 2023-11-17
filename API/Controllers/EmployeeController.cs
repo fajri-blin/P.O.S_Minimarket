@@ -23,14 +23,14 @@ public class EmployeeController : ControllerBase
     {
         var listEmployee = _employeeService.Get();
         if (listEmployee == null) return NotFound(
-            new ResponseHandlers<EmployeeDTO>
+            new ResponseHandler<EmployeeDTO>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
                 Message = "Data Not Found"
             });
 
-        return Ok(new ResponseHandlers<IEnumerable<EmployeeDTO>>
+        return Ok(new ResponseHandler<IEnumerable<EmployeeDTO>>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -45,7 +45,7 @@ public class EmployeeController : ControllerBase
         var created = _employeeService.Create(newEmployeeDTO);
         if (created != null)
         {
-            return Ok(new ResponseHandlers<EmployeeDTO>
+            return Ok(new ResponseHandler<EmployeeDTO>
             {
                 Code= StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),
@@ -53,7 +53,7 @@ public class EmployeeController : ControllerBase
                 Data = created,
             });
         }
-        return BadRequest(new ResponseHandlers<EmployeeDTO>
+        return BadRequest(new ResponseHandler<EmployeeDTO>
         {
             Code = StatusCodes.Status400BadRequest,
             Status = HttpStatusCode.BadRequest.ToString(),
@@ -68,14 +68,14 @@ public class EmployeeController : ControllerBase
         var update = _employeeService.Edit(newEmployeeDTO);
         if (!update)
         {
-            return BadRequest(new ResponseHandlers<EmployeeDTO>
+            return BadRequest(new ResponseHandler<EmployeeDTO>
             {
                 Code = StatusCodes.Status400BadRequest,
                 Status = HttpStatusCode.BadRequest.ToString(),
                 Message = "Bad Connections, Data Failed to Update"
             });
         }
-        return Ok(new ResponseHandlers<EmployeeDTO>
+        return Ok(new ResponseHandler<EmployeeDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -91,21 +91,21 @@ public class EmployeeController : ControllerBase
         switch(delete)
         {
             case -1:
-                return NotFound(new ResponseHandlers<EmployeeDTO>
+                return NotFound(new ResponseHandler<EmployeeDTO>
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "Data that want to delete is not found"
                 });
             case 0:
-                return BadRequest(new ResponseHandlers<EmployeeDTO>
+                return BadRequest(new ResponseHandler<EmployeeDTO>
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
                     Message = "Bad Connections, Data Failed to Delete"
                 });
         }
-        return Ok(new ResponseHandlers<int>
+        return Ok(new ResponseHandler<int>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),

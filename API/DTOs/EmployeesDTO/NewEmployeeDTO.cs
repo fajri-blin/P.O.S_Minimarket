@@ -1,5 +1,5 @@
 ﻿using API.Model.Entities;
-using API.Utilities.Enum;
+using API.Utilities.Enums;
 
 namespace API.DTOs.EmployeesDTO;
 

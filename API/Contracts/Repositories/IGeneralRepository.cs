@@ -1,4 +1,4 @@
-﻿namespace API.Contract;
+﻿namespace API.Contracts.Repositories;
 
 public interface IGeneralRepository<TEntity>
 {

@@ -23,14 +23,14 @@ public class PriceController : ControllerBase
     public IActionResult GetPrice()
     {
         var listPrice = _priceService.GetAll();
-        if(listPrice == null) return NotFound(new ResponseHandlers<PriceDTO>
+        if(listPrice == null) return NotFound(new ResponseHandler<PriceDTO>
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
             Message = "Data Not Found"
         });
 
-        return Ok(new ResponseHandlers<IEnumerable<PriceDTO>>
+        return Ok(new ResponseHandler<IEnumerable<PriceDTO>>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -45,7 +45,7 @@ public class PriceController : ControllerBase
         var created = _priceService.Create(newPriceDTO);
         if(created != null)
         {
-            return Ok(new ResponseHandlers<PriceDTO>
+            return Ok(new ResponseHandler<PriceDTO>
             {
                 Code = StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),
@@ -53,7 +53,7 @@ public class PriceController : ControllerBase
                 Data = created
             });
         }
-        return NotFound(new ResponseHandlers<ProductDTO>
+        return NotFound(new ResponseHandler<ProductDTO>
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
@@ -65,7 +65,7 @@ public class PriceController : ControllerBase
     public IActionResult UpdatePrice(PriceDTO price)
     {
         var updated = _priceService.Edit(price);
-        if (updated == false) return NotFound(new ResponseHandlers<bool>
+        if (updated == false) return NotFound(new ResponseHandler<bool>
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
@@ -73,7 +73,7 @@ public class PriceController : ControllerBase
             Data = updated
         });
 
-        return Ok(new ResponseHandlers<bool>
+        return Ok(new ResponseHandler<bool>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -86,20 +86,20 @@ public class PriceController : ControllerBase
     public IActionResult DeletePrice(Guid guid) 
     {
         var deleted = _priceService.Delete(guid);
-        if(deleted == -1) return BadRequest(new ResponseHandlers<PriceDTO>
+        if(deleted == -1) return BadRequest(new ResponseHandler<PriceDTO>
         {
             Code = StatusCodes.Status400BadRequest,
             Status = HttpStatusCode.BadRequest.ToString(),
             Message = "Bad Connections, Data Failed to Delete"
         });
-        if(deleted != 0) return NotFound(new ResponseHandlers<PriceDTO>
+        if(deleted != 0) return NotFound(new ResponseHandler<PriceDTO>
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
             Message = "Data that want to delete is not found"
         });
         
-        return Ok(new ResponseHandlers<int>
+        return Ok(new ResponseHandler<int>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),

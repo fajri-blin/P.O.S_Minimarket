@@ -23,14 +23,14 @@ public class TransactionController : ControllerBase
         var transactions = _transactionService.GetAll();
         if (transactions == null)
         {
-            return NotFound(new ResponseHandlers<TransactionDTO>
+            return NotFound(new ResponseHandler<TransactionDTO>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
                 Message = "Data Not Found"
             });
         }
-        return Ok(new ResponseHandlers<IEnumerable<TransactionDTO>>()
+        return Ok(new ResponseHandler<IEnumerable<TransactionDTO>>()
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -44,14 +44,14 @@ public class TransactionController : ControllerBase
         var transaction = _transactionService.GetDetailTransaction(guid);
         if (transaction == null)
         {
-            return NotFound(new ResponseHandlers<TransactionDTO>()
+            return NotFound(new ResponseHandler<TransactionDTO>()
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
                 Message = "Data Not Found"
             });
         }
-        return Ok(new ResponseHandlers<TransactionDTO>
+        return Ok(new ResponseHandler<TransactionDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -66,14 +66,14 @@ public class TransactionController : ControllerBase
         var transaction = _transactionService.Create(transactionDTO);
         if (transaction == null)
         {
-            return BadRequest(new ResponseHandlers<TransactionDTO>()
+            return BadRequest(new ResponseHandler<TransactionDTO>()
             {
                 Code = StatusCodes.Status400BadRequest,
                 Status = HttpStatusCode.BadRequest.ToString(),
                 Message = "Failed to Create Data"
             });
         }
-        return Ok(new ResponseHandlers<NewTransactionDTO>
+        return Ok(new ResponseHandler<NewTransactionDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -89,21 +89,21 @@ public class TransactionController : ControllerBase
         switch(isUpdated)
         {
             case (int)HttpStatusCode.BadRequest:
-                return BadRequest(new ResponseHandlers<TransactionDTO>()
+                return BadRequest(new ResponseHandler<TransactionDTO>()
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
                     Message = "Data Failed to Updated"
                 });
             case (int)HttpStatusCode.NotFound:
-                return NotFound(new ResponseHandlers<TransactionDTO>()
+                return NotFound(new ResponseHandler<TransactionDTO>()
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "Data Not Found"
                 });
         }
-        return Ok(new ResponseHandlers<TransactionDTO>
+        return Ok(new ResponseHandler<TransactionDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -118,21 +118,21 @@ public class TransactionController : ControllerBase
         switch (isDelete)
         {
             case (int)HttpStatusCode.BadRequest:
-                return BadRequest(new ResponseHandlers<TransactionDTO>()
+                return BadRequest(new ResponseHandler<TransactionDTO>()
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
                     Message = "Data Failed to Updated"
                 });
             case (int)HttpStatusCode.NotFound:
-                return NotFound(new ResponseHandlers<TransactionDTO>()
+                return NotFound(new ResponseHandler<TransactionDTO>()
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "Data Not Found"
                 });
         }
-        return Ok(new ResponseHandlers<TransactionDTO>
+        return Ok(new ResponseHandler<TransactionDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),

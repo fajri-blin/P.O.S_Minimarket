@@ -1,4 +1,4 @@
-﻿namespace API.Utilities.Enum;
+﻿namespace API.Utilities.Enums;
 
 public enum EmployeeEnum
 {

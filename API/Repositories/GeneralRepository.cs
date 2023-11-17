@@ -1,4 +1,4 @@
-﻿using API.Contract;
+﻿using API.Contracts.Repositories;
 using API.Data;
 
 namespace API.Repository;

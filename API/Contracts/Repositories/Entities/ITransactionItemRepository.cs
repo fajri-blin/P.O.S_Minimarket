@@ -1,6 +1,7 @@
-﻿using API.Model.Entities;
+﻿using API.Contracts.Repositories;
+using API.Model.Entities;
 
-namespace API.Contract.Entities
+namespace API.Contracts.Repositories.Entities
 {
     public interface ITransactionItemRepository : IGeneralRepository<TransactionItem>
     {

@@ -25,14 +25,14 @@ public class RoleController : ControllerBase
         var listRole = _roleService.GetAll();
         if (listRole == null)
         {
-            return NotFound(new ResponseHandlers<RoleDTO>
+            return NotFound(new ResponseHandler<RoleDTO>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
                 Message = "Data Not Found"
             });
         }
-        return Ok(new ResponseHandlers<IEnumerable<RoleDTO>>
+        return Ok(new ResponseHandler<IEnumerable<RoleDTO>>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -48,14 +48,14 @@ public class RoleController : ControllerBase
         switch(delete)
         {
             case -1:
-                return NotFound(new ResponseHandlers<RoleDTO>
+                return NotFound(new ResponseHandler<RoleDTO>
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "Data that want to delete is not found"
                 });
             case 0:
-                return BadRequest(new ResponseHandlers<RoleDTO>
+                return BadRequest(new ResponseHandler<RoleDTO>
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
@@ -63,7 +63,7 @@ public class RoleController : ControllerBase
                 });
             default: break;
         }
-        return Ok(new ResponseHandlers<int>
+        return Ok(new ResponseHandler<int>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),

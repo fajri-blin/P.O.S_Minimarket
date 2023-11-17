@@ -1,10 +1,10 @@
-﻿using API.Contract.Entities;
+﻿using API.Contracts.Repositories.Entities;
 using API.Data;
 using API.DTOs.EmployeesDTO;
 using API.DTOs.RolesDTO;
 using API.Model.Entities;
 using API.Repository.Entities;
-using API.Utilities.Enum;
+using API.Utilities.Enums;
 
 namespace API.Services;
 

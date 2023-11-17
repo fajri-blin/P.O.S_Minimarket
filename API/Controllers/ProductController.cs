@@ -22,14 +22,14 @@ public class ProductController : ControllerBase
     public IActionResult Get()
     {
         var list = _productService.Get();
-        if (list == null) return NotFound(new ResponseHandlers<ProductDTO>
+        if (list == null) return NotFound(new ResponseHandler<ProductDTO>
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
             Message = "Data Not Found"
         });
 
-        return Ok(new ResponseHandlers<IEnumerable<ProductDTO>>
+        return Ok(new ResponseHandler<IEnumerable<ProductDTO>>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -42,14 +42,14 @@ public class ProductController : ControllerBase
     public IActionResult Create(NewProductDTO productDTO)
     {
         var created = _productService.Create(productDTO);
-        if (created == null) return BadRequest(new ResponseHandlers<ProductDTO>
+        if (created == null) return BadRequest(new ResponseHandler<ProductDTO>
         {
             Code = StatusCodes.Status400BadRequest,
             Status = HttpStatusCode.BadRequest.ToString(),
             Message = "Bad Connections, Data Failed to Add"
         });
 
-        return Ok(new ResponseHandlers<ProductDTO>
+        return Ok(new ResponseHandler<ProductDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -64,20 +64,20 @@ public class ProductController : ControllerBase
         var delete = _productService.Delete(guid);
         switch (delete)
         {
-            case -1: return BadRequest(new ResponseHandlers<ProductDTO>
+            case -1: return BadRequest(new ResponseHandler<ProductDTO>
             {
                 Code = StatusCodes.Status400BadRequest,
                 Status = HttpStatusCode.BadRequest.ToString(),
                 Message = "Bad Connections, Data Failed to Delete"
             });
-            case 0: return NotFound(new ResponseHandlers<ProductDTO>
+            case 0: return NotFound(new ResponseHandler<ProductDTO>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
                 Message = "Data that want to delete is not found"
             });
         }
-        return Ok(new ResponseHandlers<int>
+        return Ok(new ResponseHandler<int>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
