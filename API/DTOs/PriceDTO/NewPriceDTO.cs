@@ -6,7 +6,7 @@ public class NewPriceDTO
 {
     public Guid ProductGuid { get; set; }
     public String UnitName { get; set; }
-    public decimal Ammount { get; set; }
+    public decimal Amount { get; set; }
 
     public static explicit operator Price(NewPriceDTO newPriceDTO)
     {
@@ -14,7 +14,7 @@ public class NewPriceDTO
         {
             Guid = Guid.NewGuid(),
             ProductGuid = newPriceDTO.ProductGuid,
-            Ammount = newPriceDTO.Ammount
+            Ammount = newPriceDTO.Amount
         };
     }
 

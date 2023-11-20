@@ -16,4 +16,9 @@ public class ProductRepository : GeneralRepository<Product>, IProductRepository
     {
         return _posDbContext.Set<Product>().FirstOrDefault(product => product.BarcodeID == barcode);
     }
+
+    public bool UniqueBarcode(string barcode)
+    {
+        return _posDbContext.Set<Product>().Any(product => product.BarcodeID == barcode);
+    }
 }

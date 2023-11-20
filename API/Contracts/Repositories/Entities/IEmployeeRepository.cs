@@ -5,4 +5,5 @@ namespace API.Contracts.Repositories.Entities;
 
 public interface IEmployeeRepository : IGeneralRepository<Employee>
 {
+    public bool IsUniqueUsername(string username);
 }

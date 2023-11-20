@@ -8,5 +8,9 @@ public class EmployeeRepository : GeneralRepository<Employee>, IEmployeeReposito
 {
     public EmployeeRepository(PosDbContext posDbContext) : base(posDbContext) { }
 
+    public bool IsUniqueUsername(string username)
+    {
+        return _posDbContext.Set<Employee>().Any(employee => employee.UserName == username);
+    }
 
 }
