@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using API.Contracts.Repositories.Entities;
 using API.Contracts.Utilities;
 using API.Data;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using TokenHandler = API.Utilities.Handlers.TokenHandler;
 
@@ -33,6 +36,10 @@ builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<PriceService>();
 builder.Services.AddScoped<TransactionService>();
+
+//Add Fluent Validation Setting
+builder.Services.AddFluentValidationAutoValidation()
+       .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 //Add Service for Token
 builder.Services.AddScoped<ITokenHandler, TokenHandler>();
