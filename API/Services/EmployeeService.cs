@@ -36,6 +36,18 @@ public class EmployeeService
 
     }
 
+    public EmployeeDTO Get(Guid guid)
+    {
+        var employee = _employeeRepository.GetByGuid(guid);
+        if(employee == null) 
+        {
+            return null;
+        }
+
+        var dto = (EmployeeDTO) employee;
+        return dto;
+    }
+
     public EmployeeDTO? Create(NewEmployeeDTO newEmployeeDTO)
     {
         using(var transactions = _posDbContext.Database.BeginTransaction()) 

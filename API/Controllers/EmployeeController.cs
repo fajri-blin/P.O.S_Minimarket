@@ -63,9 +63,9 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut("UpdatePrice/")]
-    public IActionResult UpdateEmployee(EmployeeDTO newEmployeeDTO)
+    public IActionResult UpdateEmployee(EmployeeDTO EmployeeDTO)
     {
-        var update = _employeeService.Edit(newEmployeeDTO);
+        var update = _employeeService.Edit(EmployeeDTO);
         if (!update)
         {
             return BadRequest(new ResponseHandler<EmployeeDTO>
@@ -79,8 +79,8 @@ public class EmployeeController : ControllerBase
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
-            Message = "Successfully delete the data",
-            Data = newEmployeeDTO
+            Message = "Successfully update the data",
+            Data = EmployeeDTO
         });
     }
 
@@ -95,21 +95,21 @@ public class EmployeeController : ControllerBase
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
-                    Message = "Data that want to delete is not found"
+                    Message = "The data that is to be deleted was not found."
                 });
             case 0:
                 return BadRequest(new ResponseHandler<EmployeeDTO>
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
-                    Message = "Bad Connections, Data Failed to Delete"
+                    Message = "Poor Connections: Data Deletion Failed"
                 });
         }
         return Ok(new ResponseHandler<int>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
-            Message = "Successfully delete the data",
+            Message = "The data was successfully deleted.",
             Data = delete
         });
     }

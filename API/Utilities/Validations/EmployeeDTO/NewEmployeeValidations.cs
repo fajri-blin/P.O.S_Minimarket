@@ -12,7 +12,11 @@ public class NewEmployeeValidations : AbstractValidator<NewEmployeeDTO>
         _employeeRepository = employeeRepository;
 
         RuleFor(employee => employee.Firstname)
-            .NotEmpty().WithMessage("FirstName is required");
+            .NotEmpty().WithMessage("FirstName is required")
+            .Matches("^[^0-9]+$").WithMessage("Firstname should not contain numbers");
+
+        RuleFor(employee => employee.Lastname)
+            .Matches("^[^0-9]+$").WithMessage("Lastname should not contain numbers");
 
         RuleFor(employee => employee.Username)
             .NotEmpty()

@@ -10,7 +10,7 @@ public class Employee : BaseEntity
     public string FirstName { get; set; }
     
     [Column("lastname", TypeName ="nvarchar(200)")]
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
     [Column("username", TypeName ="nvarchar(100)")]
     public string UserName { get; set; }
