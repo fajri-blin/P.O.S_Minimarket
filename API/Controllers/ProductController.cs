@@ -37,6 +37,46 @@ public class ProductController : ControllerBase
             Data = list
         });
     }
+    
+    [HttpGet("{barcodeID}/")]
+    public IActionResult Get(string barcodeID)
+    {
+        var product = _productService.Get(barcodeID);
+        if (product == null) return NotFound(new ResponseHandler<ProductDTO>
+        {
+            Code = StatusCodes.Status404NotFound,
+            Status = HttpStatusCode.NotFound.ToString(),
+            Message = "Data not found"
+        });
+
+        return Ok(new ResponseHandler<ProductDTO>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data Found",
+            Data = product
+        });
+    }
+
+    [HttpGet("{guid}/")]
+    public IActionResult Get(Guid guid)
+    {
+        var product = _productService.Get(guid);
+        if (product == null) return NotFound(new ResponseHandler<ProductDTO>
+        {
+            Code = StatusCodes.Status404NotFound,
+            Status = HttpStatusCode.NotFound.ToString(),
+            Message = "Data not found"
+        });
+
+        return Ok(new ResponseHandler<ProductDTO>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data found",
+            Data = product
+        });
+    }
 
     [HttpPost]
     public IActionResult Create(NewProductDTO productDTO)
@@ -77,12 +117,11 @@ public class ProductController : ControllerBase
                 Message = "Data that want to delete is not found"
             });
         }
-        return Ok(new ResponseHandler<int>
+        return Ok(new ResponseHandler<ProductDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
-            Message = "Successfully delete the data",
-            Data = delete
+            Message = "Successfully deleted the data",
         });
     }
 }

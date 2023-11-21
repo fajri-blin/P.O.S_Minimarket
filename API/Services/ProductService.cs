@@ -25,6 +25,24 @@ public class ProductService
         return dto;
     }
 
+    public ProductDTO? Get(string barcodeID)
+    {
+        var product = _productRepository.GetByBarcode(barcodeID);
+        if (product == null) return null;
+
+        var dto = (ProductDTO)product;
+        return dto;
+    }
+
+    public ProductDTO? Get(Guid guid)
+    {
+        var product = _productRepository.GetByGuid(guid);
+        if (product == null) return null;
+        
+        var dto = (ProductDTO)product;
+        return dto;
+    }
+
     public int Delete(Guid guid)
     {
         var getEntity = _productRepository.GetByGuid(guid);
