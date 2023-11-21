@@ -39,7 +39,7 @@ public class EmployeeController : ControllerBase
         });
     }
 
-    [HttpGet("{guid/}")]
+    [HttpGet("{guid}/")]
     public IActionResult GetEmployee(Guid guid)
     {
         var employee = _employeeService.Get(guid);

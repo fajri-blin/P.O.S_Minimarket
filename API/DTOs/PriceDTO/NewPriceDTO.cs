@@ -14,7 +14,7 @@ public class NewPriceDTO
         {
             Guid = Guid.NewGuid(),
             ProductGuid = newPriceDTO.ProductGuid,
-            Ammount = newPriceDTO.Amount
+            Amount = newPriceDTO.Amount
         };
     }
 

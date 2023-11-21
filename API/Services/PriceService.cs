@@ -38,6 +38,13 @@ public class PriceService
         {
             try
             {
+                //check if the product is exist
+                var isProductExist = _productRepository.IsExits(newPriceDTO.ProductGuid);
+                if (!isProductExist) 
+                {
+                    return null;
+                }
+
                 //check existing unit price
                 var getUnit = _unitRepository.GetByName(newPriceDTO.UnitName);
                 Unit newUnit = null;

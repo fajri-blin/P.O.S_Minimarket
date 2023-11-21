@@ -7,7 +7,7 @@ public class PriceDTO
     public Guid Guid { get; set; }
     public Guid? ProductGuid { get; set; }
     public Guid? UnitGuid { get; set; }
-    public decimal Ammount { get; set; }
+    public decimal Amount { get; set; }
 
     public static explicit operator PriceDTO(Price price)
     {
@@ -16,7 +16,7 @@ public class PriceDTO
             Guid = price.Guid,
             ProductGuid = price.ProductGuid,
             UnitGuid = price.UnitGuid,
-            Ammount = price.Ammount,
+            Amount = price.Amount,
         };
     }
 
@@ -25,7 +25,7 @@ public class PriceDTO
         return new Price
         {
             Guid = price.Guid,
-            Ammount = price.Ammount
+            Amount = price.Amount
         };
     }
 }
