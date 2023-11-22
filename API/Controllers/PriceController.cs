@@ -23,7 +23,7 @@ public class PriceController : ControllerBase
     public IActionResult GetPrice()
     {
         var listPrice = _priceService.GetAll();
-        if(listPrice == null) return NotFound(new ResponseHandler<PriceDTO>
+        if (listPrice == null) return NotFound(new ResponseHandler<PriceDTO>
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
@@ -36,6 +36,25 @@ public class PriceController : ControllerBase
             Status = HttpStatusCode.OK.ToString(),
             Message = "Data Found",
             Data = listPrice
+        });
+    }
+    [HttpGet("{guid}")]
+    public IActionResult GetPrice(Guid guid)
+    {
+        var price = _priceService.GetPrice(guid);
+        if (price == null) return NotFound(new ResponseHandler<PriceDTO>
+        {
+            Code = StatusCodes.Status404NotFound,
+            Status = HttpStatusCode.NotFound.ToString(),
+            Message = "Data Not Found"
+        });
+
+        return Ok(new ResponseHandler<PriceDTO>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data Found",
+            Data = price
         });
     }
 
@@ -57,7 +76,7 @@ public class PriceController : ControllerBase
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
-            Message = "Data Not Found"
+            Message = "Data Failed to created"
         });
     }
 
@@ -69,7 +88,7 @@ public class PriceController : ControllerBase
         {
             Code = StatusCodes.Status404NotFound,
             Status = HttpStatusCode.NotFound.ToString(),
-            Message = "Data Not Found",
+            Message = "Data Failed to Updated",
             Data = updated
         });
 
@@ -104,7 +123,6 @@ public class PriceController : ControllerBase
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Successfully delete the data",
-            Data = deleted
         });
     }
 }

@@ -32,6 +32,15 @@ public class PriceService
         return dto;
     }
 
+    public PriceDTO GetPrice(Guid guid)
+    {
+        var price = _priceRepository.GetByGuid(guid);
+        if (price == null) return null;
+
+        var dto = (PriceDTO)price;
+        return dto;
+    }
+
     public PriceDTO? Create(NewPriceDTO newPriceDTO)
     {
         using(var transactions = _posDbContext.Database.BeginTransaction())

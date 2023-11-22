@@ -73,12 +73,12 @@ public class TransactionController : ControllerBase
                 Message = "Failed to Create Data"
             });
         }
-        return Ok(new ResponseHandler<NewTransactionDTO>
+        return Ok(new ResponseHandler<TransactionDTO>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Data Successfully Created",
-            Data = transactionDTO
+            Data = transaction
         });
     }
 

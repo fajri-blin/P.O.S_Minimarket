@@ -7,7 +7,7 @@ public class NewPriceValidation : AbstractValidator<NewPriceDTO>
 {
     public NewPriceValidation()
     {
-        RuleFor(attr => attr.UnitName).NotEmpty();
+        RuleFor(attr => attr.UnitName).NotEmpty().WithMessage("UnitName is required");
         RuleFor(attr => attr.Amount)
             .NotEmpty()
             .WithMessage("Amount is required")
