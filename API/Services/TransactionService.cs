@@ -11,12 +11,23 @@ public class TransactionService
 {
     private readonly ITransactionRepository _transactionRepository;
     private readonly ITransactionItemRepository _transactionItemRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly IPriceRepository _priceRepository;
+    private readonly IEmployeeRepository _employeeRepository;
     private readonly PosDbContext _posDbContext;
 
-    public TransactionService(ITransactionRepository transactionRepository, ITransactionItemRepository transactionItemRepository, PosDbContext posDbContext)
+    public TransactionService(ITransactionRepository transactionRepository, 
+                              ITransactionItemRepository transactionItemRepository, 
+                              IEmployeeRepository employeeRepository,
+                              IPriceRepository priceRepository,
+                              IProductRepository productRepository,
+                              PosDbContext posDbContext)
     {
         _transactionRepository = transactionRepository;
         _transactionItemRepository = transactionItemRepository;
+        _employeeRepository = employeeRepository;
+        _priceRepository = priceRepository;
+        _productRepository = productRepository;
         _posDbContext = posDbContext;
     }
 
@@ -56,8 +67,16 @@ public class TransactionService
         {
             try
             {
+                //check if the Employee is exist
+                var isExistEmployee = _employeeRepository.IsExits((Guid)transactionDTO.EmployeeGuid);
+                if (!isExistEmployee)
+                {
+                    return null;
+                }
+
+
                 //insert the Transaction Detail to DB
-                var transaction = _transactionRepository.Create((Transaction) transactionDTO);
+                var transaction = _transactionRepository.Create((Transaction)transactionDTO);
                 if(transaction == null)
                 {
                     transactionContext.Rollback();
@@ -67,6 +86,13 @@ public class TransactionService
                 //insert the List of Transaction Item to DB
                 foreach(var transactionItem in transactionDTO.TransactionItemDTOs)
                 {
+                    //checking the existing Price and Product 
+                    if (!_productRepository.IsExits((Guid)transactionItem.ProductGuid))
+                    {
+                        break;
+                    }
+
+
                     var createdItem = (TransactionItem) transactionItem;
                     var resultTransactionItem = _transactionItemRepository.Create(createdItem);
                     if (resultTransactionItem == null)
