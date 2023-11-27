@@ -122,7 +122,7 @@ public class TransactionController : ControllerBase
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
-                    Message = "Data Failed to Updated"
+                    Message = "Data Failed to Delete"
                 });
             case (int)HttpStatusCode.NotFound:
                 return NotFound(new ResponseHandler<TransactionDTO>()
@@ -136,7 +136,7 @@ public class TransactionController : ControllerBase
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
-            Message = "Data Successfully Edited"
+            Message = "Data Successfully Delete"
         });
     }
 }

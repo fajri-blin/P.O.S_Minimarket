@@ -15,7 +15,7 @@ public class NewTransactionItemValidation : AbstractValidator<NewTransactionItem
         ;
 
         RuleFor(attr => attr.Subtotal)
-            .NotEmpty().WithMessage("Subtitle is required")
+            .NotEmpty().WithMessage("Subtotal is required")
             .GreaterThanOrEqualTo(0).WithMessage("Subtotal must greater than or equal to 0")
             .Must(OnlyNumberHandler<decimal>.ValidNumber).WithMessage("Subtotal should contain only numbers, dots, or commas");
         ;
