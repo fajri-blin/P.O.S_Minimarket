@@ -7,7 +7,7 @@ namespace API.Model.Entities;
 [Table("tb_m_unit")]
 public class Unit : BaseEntity
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     //Cardinality
     public ICollection<Price>? Prices { get; set; }

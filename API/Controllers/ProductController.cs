@@ -38,7 +38,7 @@ public class ProductController : ControllerBase
         });
     }
     
-    [HttpGet("{barcodeID}/")]
+    [HttpGet("Barcode/{barcodeID}")]
     public IActionResult Get(string barcodeID)
     {
         var product = _productService.Get(barcodeID);

@@ -23,7 +23,7 @@ public class PriceService
         _unitRepository = unitRepository;
     }
 
-    public IEnumerable<PriceDTO> GetAll() 
+    public IEnumerable<PriceDTO>? GetAll() 
     {
         var listPrice = _priceRepository.GetAll();
         if (listPrice == null || !listPrice.Any()) return null;
@@ -32,7 +32,7 @@ public class PriceService
         return dto;
     }
 
-    public PriceDTO GetPrice(Guid guid)
+    public PriceDTO? GetPrice(Guid guid)
     {
         var price = _priceRepository.GetByGuid(guid);
         if (price == null) return null;
@@ -56,7 +56,7 @@ public class PriceService
 
                 //check existing unit price
                 var getUnit = _unitRepository.GetByName(newPriceDTO.UnitName);
-                Unit newUnit = null;
+                Unit? newUnit = null;
                 if (getUnit == null)
                 {
                     newUnit = (Unit)new NewUnitDTO

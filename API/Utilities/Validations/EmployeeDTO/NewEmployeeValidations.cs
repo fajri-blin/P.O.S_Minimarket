@@ -19,9 +19,8 @@ public class NewEmployeeValidations : AbstractValidator<NewEmployeeDTO>
             .Matches("^[^0-9]+$").WithMessage("Lastname should not contain numbers");
 
         RuleFor(employee => employee.Username)
-            .NotEmpty()
-            .Must(UniqueProperty)
-            .WithMessage("Username is required");
+            .NotEmpty().WithMessage("Username is required")
+            .Must(UniqueProperty).WithMessage("The Account already registered");
 
         RuleFor(employee => employee.Password)
           .NotEmpty().WithMessage("Password is required.")

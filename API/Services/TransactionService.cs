@@ -36,10 +36,10 @@ public class TransactionService
         var transactions = _transactionRepository.GetAll();
         if (transactions == null) return null;
 
-        ICollection<TransactionDTO> transactionDto = null;
+        ICollection<TransactionDTO>? transactionDto = null;
         foreach (TransactionDTO transaction in transactions) 
         {
-            transactionDto.Add(transaction);
+            transactionDto!.Add(transaction);
         }
         return transactionDto;
     }
@@ -55,7 +55,7 @@ public class TransactionService
         {
             foreach(var transactionItem in TransactionItems)
             {
-                transactionDto.TransactionItemsDTO.Add((TransactionItemDTO)transactionItem);
+                transactionDto.TransactionItemsDTO!.Add((TransactionItemDTO)transactionItem);
             }
         }
         return transactionDto;
@@ -68,7 +68,7 @@ public class TransactionService
             try
             {
                 //check if the Employee is exist
-                var isExistEmployee = _employeeRepository.IsExits((Guid)transactionDTO.EmployeeGuid);
+                var isExistEmployee = _employeeRepository.IsExits((Guid)transactionDTO.EmployeeGuid!);
                 if (!isExistEmployee)
                 {
                     return null;
@@ -84,14 +84,13 @@ public class TransactionService
                 }
 
                 //insert the List of Transaction Item to DB
-                foreach(var transactionItem in transactionDTO.TransactionItemDTOs)
+                foreach(var transactionItem in transactionDTO.TransactionItemDTOs!)
                 {
                     //checking the existing Price and Product 
-                    if (!_productRepository.IsExits((Guid)transactionItem.ProductGuid))
+                    if (!_productRepository.IsExits((Guid)transactionItem.ProductGuid!))
                     {
                         break;
                     }
-
 
                     var createdItem = (TransactionItem) transactionItem;
                     var resultTransactionItem = _transactionItemRepository.Create(createdItem);
@@ -132,7 +131,7 @@ public class TransactionService
                 var getAllTransactionItems = _transactionItemRepository.GetByTransactionsGuid(transactionDTO.Guid);
                 if(getAllTransactionItems == null)
                 {
-                    foreach(var transactionsItem in transactionDTO.TransactionItemsDTO)
+                    foreach(var transactionsItem in transactionDTO.TransactionItemsDTO!)
                     {
                         var createTransactionsItem = _transactionItemRepository.Create((TransactionItem)transactionsItem);
                         if(createTransactionsItem == null)
@@ -155,7 +154,7 @@ public class TransactionService
                         }
                     }
                     //Create New TransactionItem on the Transaction
-                    foreach(var transactionItem in transactionDTO.TransactionItemsDTO)
+                    foreach(var transactionItem in transactionDTO.TransactionItemsDTO!)
                     {
                         var createTransactionItem = _transactionItemRepository.Create((TransactionItem)transactionItem);
                         if (createTransactionItem == null)

@@ -5,7 +5,7 @@ namespace API.DTOs.RolesDTO;
 public class RoleDTO
 {
     public Guid Guid { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     public static explicit operator Role(RoleDTO dto)
     {

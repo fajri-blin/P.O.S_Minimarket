@@ -7,7 +7,7 @@ namespace API.Model.Entities;
 public class Role : BaseEntity
 {
     [Column("name", TypeName ="nvarchar(50)")]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     
     //Cardinality
 

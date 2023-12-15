@@ -36,7 +36,7 @@ public class EmployeeService
 
     }
 
-    public EmployeeDTO Get(Guid guid)
+    public EmployeeDTO? Get(Guid guid)
     {
         var employee = _employeeRepository.GetByGuid(guid);
         if(employee == null) 
@@ -56,24 +56,29 @@ public class EmployeeService
             {
                 //check existing role in employee's input
                 var getRole = _roleRepository.GetByName(nameof(newEmployeeDTO.RoleName));
-                Role newRole = null;
+                Role? newRole = null;
                 
                 if (getRole == null)
                 {
                     newRole = (Role)new NewRoleDTO
                     {
-                        Name = Enum.GetName(typeof(EmployeeEnum), newEmployeeDTO.RoleName)
+                        Name = Enum.GetName(typeof(EmployeeEnum), newEmployeeDTO.RoleName)!
                     };
                     newRole = _roleRepository.Create(newRole);
                 }
                 var roleToUse = getRole ?? newRole;
 
                 var newEmployee = (Employee) newEmployeeDTO;
-                newEmployee.RoleGuid = roleToUse.Guid;
+                newEmployee.RoleGuid = roleToUse!.Guid;
 
                 var createdEmployee = _employeeRepository.Create(newEmployee);
-                transactions.Commit();
-                return (EmployeeDTO?) createdEmployee;
+                if(createdEmployee != null)
+                {
+                    transactions.Commit();
+                    return (EmployeeDTO)createdEmployee;
+                }else {
+                    return null;
+                }
             }
             catch
             {

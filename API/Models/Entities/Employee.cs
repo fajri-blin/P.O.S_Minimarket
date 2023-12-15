@@ -7,16 +7,16 @@ namespace API.Model.Entities;
 public class Employee : BaseEntity
 {
     [Column("firstname", TypeName ="nvarchar(200)")]
-    public string FirstName { get; set; }
+    public string FirstName { get; set; } = string.Empty;
     
     [Column("lastname", TypeName ="nvarchar(200)")]
     public string? LastName { get; set; }
 
     [Column("username", TypeName ="nvarchar(100)")]
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
 
     [Column("password")]
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 
     [Column("role_guid")]
     public Guid? RoleGuid { get; set; }

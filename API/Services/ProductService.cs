@@ -16,7 +16,7 @@ public class ProductService
         _posDbContext = posDbContext;
     }
 
-    public IEnumerable<ProductDTO> Get()
+    public IEnumerable<ProductDTO>? Get()
     {
         var list = _productRepository.GetAll();
         if (list == null || !list.Any()) return null;
@@ -67,8 +67,8 @@ public class ProductService
             }
             catch
             {
-                return null;
                 transactions.Rollback();
+                return null;
             }
         }
     }

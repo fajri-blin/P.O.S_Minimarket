@@ -15,7 +15,7 @@ public class RoleService
         _context = context;
     }
 
-    public IEnumerable<RoleDTO> GetAll()
+    public IEnumerable<RoleDTO>? GetAll()
     {
         var list = _roleService.GetAll();
         if(list == null || !list.Any()) 
