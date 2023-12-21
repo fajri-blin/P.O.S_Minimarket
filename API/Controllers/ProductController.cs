@@ -78,11 +78,11 @@ public class ProductController : ControllerBase
         });
     }
 
-    [HttpPost]
+    [HttpPost("Create")]
     public IActionResult Create(NewProductDTO productDTO)
     {
         var created = _productService.Create(productDTO);
-        if (created == null) return BadRequest(new ResponseHandler<ProductDTO>
+        if (created == 0) return BadRequest(new ResponseHandler<ProductDTO>
         {
             Code = StatusCodes.Status400BadRequest,
             Status = HttpStatusCode.BadRequest.ToString(),
@@ -94,8 +94,38 @@ public class ProductController : ControllerBase
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Successfully Added",
-            Data = created
         });
+    }
+
+    [HttpPut("Update")]
+    public IActionResult Update(ProductDTO productDTO)
+    {
+        var isUpdated = _productService.Edit(productDTO);
+        switch(isUpdated)
+        {
+            case 0: return BadRequest(new ResponseHandler<ProductDTO>
+            {
+                Code = StatusCodes.Status400BadRequest,
+                Status = HttpStatusCode.BadRequest.ToString(),
+                Message = "Bad Connections, Data Failed to Update"
+            });
+            case -1: return NotFound(new ResponseHandler<ProductDTO>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data that want to update is not found"
+            });
+            case 1: return Ok(new ResponseHandler<ProductDTO>{
+                Code = StatusCodes.Status200OK,
+                Status = HttpStatusCode.OK.ToString(),
+                Message = "Successfully Updated",
+            });
+            default: return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHandler<ProductDTO>{
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Internal Server Error"
+            });
+        }
     }
 
     [HttpDelete("Delete")]

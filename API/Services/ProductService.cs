@@ -54,21 +54,44 @@ public class ProductService
         return 1;
     }
 
-    public ProductDTO? Create(NewProductDTO newProductDTO)
+    public int Edit(ProductDTO product)
+    {
+        using(var transaction = _posDbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                var IsExits = _productRepository.IsExits(product.Guid);
+                if(!IsExits) return -1;
+
+                var edit = _productRepository.Update((Product)product);
+                if(!edit) return 0;
+
+                transaction.Commit();
+                return 1;
+
+            }catch
+            {
+                transaction.Rollback();
+                return 0;
+            }
+        }
+    }
+
+    public int Create(NewProductDTO newProductDTO)
     {
         using(var transactions = _posDbContext.Database.BeginTransaction())
         {
             try
             {
                 var created = _productRepository.Create((Product)newProductDTO);
-                if (created == null) return null;
+                if (created == null) return 0;
                 transactions.Commit();
-                return (ProductDTO)created;
+                return 1;
             }
             catch
             {
                 transactions.Rollback();
-                return null;
+                return 1;
             }
         }
     }

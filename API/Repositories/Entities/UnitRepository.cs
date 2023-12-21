@@ -15,4 +15,9 @@ public class UnitRepository : GeneralRepository<Unit>, IUnitRepository
     {
         return _posDbContext.Set<Unit>().FirstOrDefault(unit => unit.Name.ToLower() == name.ToLower());
     }
+
+    public bool IsExits(string name)
+    {
+        return _posDbContext.Set<Unit>().Any(unit => unit.Name.ToLower() == name.ToLower());
+    }
 }

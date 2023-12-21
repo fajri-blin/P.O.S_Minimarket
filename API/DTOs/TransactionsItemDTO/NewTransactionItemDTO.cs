@@ -5,7 +5,6 @@ namespace API.DTOs.TransactionsItemDTO;
 
 public class NewTransactionItemDTO
 {
-    public Guid? TransactionsGuid { get; set; }
     public Guid? ProductGuid { get; set; }
     public Guid? PriceGuid { get; set; }
     public float Quantity { get; set; }
@@ -16,7 +15,6 @@ public class NewTransactionItemDTO
         return new TransactionItem
         {
             Guid = Guid.NewGuid(),
-            TransactionGuid = transactionItem.TransactionsGuid,
             ProductGuid = transactionItem.ProductGuid,
             PriceGuid = transactionItem.PriceGuid,
             Quantity = transactionItem.Quantity,

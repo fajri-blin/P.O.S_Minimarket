@@ -1,6 +1,7 @@
 ﻿using API.Contracts.Repositories.Entities;
 using API.Data;
 using API.DTOs.RolesDTO;
+using API.Model.Entities;
 
 namespace API.Services;
 
@@ -25,6 +26,14 @@ public class RoleService
 
         var listDto = list.Select(role => (RoleDTO)role);
         return listDto;
+    }
+
+    public int Create(NewRoleDTO role)
+    {
+        var roleEntity = (Role)role;
+        var create = _roleService.Create(roleEntity);
+        if(create is null) return 0;
+        return 1;
     }
 
     public int Delete(Guid guid)

@@ -9,7 +9,7 @@ public class NewEmployeeDTO
     public string Lastname { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public EmployeeEnum RoleName { get; set; }
+    public EmployeeEnum RoleSet { get; set; }
 
     public static explicit operator Employee(NewEmployeeDTO dto)
     {

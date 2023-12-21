@@ -55,14 +55,14 @@ public class EmployeeService
             try
             {
                 //check existing role in employee's input
-                var getRole = _roleRepository.GetByName(nameof(newEmployeeDTO.RoleName));
+                var getRole = _roleRepository.GetByName(nameof(newEmployeeDTO.RoleSet));
                 Role? newRole = null;
                 
                 if (getRole == null)
                 {
                     newRole = (Role)new NewRoleDTO
                     {
-                        Name = Enum.GetName(typeof(EmployeeEnum), newEmployeeDTO.RoleName)!
+                        Name = Enum.GetName(typeof(EmployeeEnum), newEmployeeDTO.RoleSet)!
                     };
                     newRole = _roleRepository.Create(newRole);
                 }

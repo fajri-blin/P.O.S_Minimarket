@@ -16,7 +16,7 @@ public class NewEmployeeValidations : AbstractValidator<NewEmployeeDTO>
             .Matches("^[^0-9]+$").WithMessage("Firstname should not contain numbers");
 
         RuleFor(employee => employee.Lastname)
-            .Matches("^[^0-9]+$").WithMessage("Lastname should not contain numbers");
+            .Matches("^[^0-9]*$").WithMessage("Lastname should not contain numbers");
 
         RuleFor(employee => employee.Username)
             .NotEmpty().WithMessage("Username is required")
@@ -30,7 +30,7 @@ public class NewEmployeeValidations : AbstractValidator<NewEmployeeDTO>
           .Matches("[0-9]").WithMessage("Password must contain at least one digit.")
           .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character.");
 
-        RuleFor(employee => employee.RoleName)
+        RuleFor(employee => employee.RoleSet)
             .NotEmpty().WithMessage("Role Name is required");
     }
 

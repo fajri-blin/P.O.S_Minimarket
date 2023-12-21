@@ -74,7 +74,6 @@ public class TransactionService
                     return null;
                 }
 
-
                 //insert the Transaction Detail to DB
                 var transaction = _transactionRepository.Create((Transaction)transactionDTO);
                 if(transaction == null)
@@ -89,10 +88,11 @@ public class TransactionService
                     //checking the existing Price and Product 
                     if (!_productRepository.IsExits((Guid)transactionItem.ProductGuid!))
                     {
-                        break;
+                        return null;
                     }
 
                     var createdItem = (TransactionItem) transactionItem;
+                    createdItem.TransactionGuid = transaction.Guid;
                     var resultTransactionItem = _transactionItemRepository.Create(createdItem);
                     if (resultTransactionItem == null)
                     {

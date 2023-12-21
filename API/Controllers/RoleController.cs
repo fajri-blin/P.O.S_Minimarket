@@ -41,6 +41,36 @@ public class RoleController : ControllerBase
         });
     }
 
+    [HttpPost("Create")]
+    public IActionResult Create(NewRoleDTO newRoleDTO)
+    {
+        int status = _roleService.Create(newRoleDTO);
+        switch(status)
+        {
+            case 0 :
+                return BadRequest(new ResponseHandler<RoleDTO>
+                {
+                    Code = StatusCodes.Status400BadRequest,
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = "Bad Connections, Data Failed to Create"
+                });
+            case 1 :
+                return Ok(new ResponseHandler<RoleDTO>
+                {
+                    Code = StatusCodes.Status200OK,
+                    Status = HttpStatusCode.OK.ToString(),
+                    Message = "Successfully create the data",
+                });
+            default :
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHandler<RoleDTO>
+                {
+                    Code = StatusCodes.Status500InternalServerError,
+                    Status = HttpStatusCode.InternalServerError.ToString(),
+                    Message = "Unexpected status value"
+                });
+        }
+    }
+
     [HttpDelete("Delete")]
     public IActionResult Delete(Guid guid)
     {

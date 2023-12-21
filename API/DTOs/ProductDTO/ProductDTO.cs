@@ -18,4 +18,14 @@ public class ProductDTO
             Title = product.Title,
         };
     }
+
+    public static explicit operator Product(ProductDTO productDTO)
+    {
+        return new Product
+        {
+            Guid = productDTO.Guid,
+            BarcodeID = productDTO.BarcodeId,
+            Title = productDTO.Title,
+        };
+    }
 }
