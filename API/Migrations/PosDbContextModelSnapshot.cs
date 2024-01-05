@@ -156,6 +156,8 @@ namespace API.Migrations
 
                     b.HasKey("Guid");
 
+                    b.HasIndex("PriceGuid");
+
                     b.HasIndex("ProductGuid");
 
                     b.HasIndex("TransactionGuid");
@@ -228,17 +230,17 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Model.Entities.TransactionItem", b =>
                 {
+                    b.HasOne("API.Models.Entities.Price", "Price")
+                        .WithMany("TransactionItems")
+                        .HasForeignKey("PriceGuid")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("API.Model.Entities.Product", "Product")
                         .WithMany("TransactionItems")
                         .HasForeignKey("ProductGuid")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("API.Model.Entities.Transaction", "Transaction")
-                        .WithMany("TransactionItems")
-                        .HasForeignKey("TransactionGuid")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("API.Models.Entities.Price", "Price")
                         .WithMany("TransactionItems")
                         .HasForeignKey("TransactionGuid")
                         .OnDelete(DeleteBehavior.SetNull);

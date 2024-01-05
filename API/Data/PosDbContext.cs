@@ -75,7 +75,7 @@ public class PosDbContext : DbContext
         modelBuilder.Entity<TransactionItem>()
             .HasOne(transaction_item=> transaction_item.Price)
             .WithMany(price => price.TransactionItems)
-            .HasForeignKey(price => price.TransactionGuid)
+            .HasForeignKey(TransactionItem => TransactionItem.PriceGuid)
             .OnDelete(DeleteBehavior.SetNull);
     }
 }

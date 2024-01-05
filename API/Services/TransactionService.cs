@@ -3,6 +3,7 @@ using API.Data;
 using API.DTOs.TransactionsDTO;
 using API.DTOs.TransactionsItemDTO;
 using API.Model.Entities;
+using System.Data;
 using System.Net;
 
 namespace API.Services;
@@ -36,10 +37,10 @@ public class TransactionService
         var transactions = _transactionRepository.GetAll();
         if (transactions == null) return null;
 
-        ICollection<TransactionDTO>? transactionDto = null;
-        foreach (TransactionDTO transaction in transactions) 
+        ICollection<TransactionDTO> transactionDto = new List<TransactionDTO>();
+        foreach (var transaction in transactions) 
         {
-            transactionDto!.Add(transaction);
+            transactionDto.Add((TransactionDTO)transaction);
         }
         return transactionDto;
     }
@@ -85,19 +86,30 @@ public class TransactionService
                 //insert the List of Transaction Item to DB
                 foreach(var transactionItem in transactionDTO.TransactionItemDTOs!)
                 {
-                    //checking the existing Price and Product 
-                    if (!_productRepository.IsExits((Guid)transactionItem.ProductGuid!))
+                    try
                     {
-                        return null;
-                    }
+                        //checking the existing Price and Product 
+                        if(!_productRepository.IsExits((Guid)transactionItem.ProductGuid!))
+                        {
+                            return null;
+                        }
+                        if(!_priceRepository.IsExits((Guid)transactionItem.PriceGuid!))
+                        {
+                            return null;
+                        }
 
-                    var createdItem = (TransactionItem) transactionItem;
-                    createdItem.TransactionGuid = transaction.Guid;
-                    var resultTransactionItem = _transactionItemRepository.Create(createdItem);
-                    if (resultTransactionItem == null)
+                        var createdItem = (TransactionItem) transactionItem;
+                        createdItem.TransactionGuid = transaction.Guid;
+                        var resultTransactionItem = _transactionItemRepository.Create(createdItem);
+                        if (resultTransactionItem == null)
+                        {
+                            transactionContext.Rollback();
+                            return null;
+                        };
+                    }catch
                     {
-                        transactionContext.Rollback();
-                    };
+
+                    }
                 }
                 transactionContext.Commit();
                 var dto = (TransactionDTO) transaction;
