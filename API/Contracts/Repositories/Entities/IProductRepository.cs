@@ -7,5 +7,6 @@ public interface IProductRepository : IGeneralRepository<Product>
 {
     Product? GetByBarcode(string barcode);
     bool UniqueBarcode(string barcode);
+    bool IsProductExist(Guid guid);
 
 }
